@@ -27,7 +27,6 @@ type CommandResult = ({
     dataAsBuffer: null;
     error: ExecUtilsError;
 }) & {
-    code: number;
     process: ChildProcess;
 };
 interface BaseOptions {
@@ -74,7 +73,7 @@ interface ExecOptions extends BaseOptions, ExecOptions$1 {
  * console.log(data); // 'Hello World\n'
  *
  * // With timeout
- * const { error, code } = await spawn('sleep', ['10'], { timeout: 5000 });
+ * const { error } = await spawn('sleep', ['10'], { timeout: 5000 });
  * if (error) {
  *   console.log(error.message); // "Command timed out after 5000ms"
  * }

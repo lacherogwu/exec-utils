@@ -53,10 +53,10 @@ console.log(execData); // 'Hello World\n'
 
 ```typescript
 // Kill process after 5 seconds
-const { error, code } = await spawn('sleep', ['10'], { timeout: 5000 });
+const { error } = await spawn('sleep', ['10'], { timeout: 5000 });
 if (error) {
 	console.log(error.message); // "Command timed out after 5000ms"
-	console.log(code); // -1
+	console.log(error.code); // -1
 }
 ```
 
@@ -91,10 +91,10 @@ setTimeout(() => {
 	controller.abort();
 }, 2000);
 
-const { error, code } = await processPromise;
+const { error } = await processPromise;
 if (error) {
 	console.log(error.message); // "Operation aborted"
-	console.log(code); // -1
+	console.log(error.code); // -1
 }
 ```
 
@@ -102,10 +102,10 @@ if (error) {
 
 ```typescript
 // Handle errors and non-zero exit codes
-const { error, data, code } = await spawn('ls', ['non-existent-directory']);
+const { error, data } = await spawn('ls', ['non-existent-directory']);
 
 if (error) {
-	console.error(`Command failed with code ${code}`);
+	console.error(`Command failed with code ${error.code}`);
 	console.error(error.message); // Contains stderr output
 } else {
 	console.log(data);
@@ -171,7 +171,6 @@ type CommandResult =
 			data: string; // Process output as string
 			dataAsBuffer: Buffer; // Raw output buffer
 			error: null; // No error
-			code: number; // Exit code (0)
 			process: ChildProcess; // Process reference
 	  }
 	| {
@@ -179,7 +178,6 @@ type CommandResult =
 			data: null; // No data
 			dataAsBuffer: null; // No data buffer
 			error: ExecUtilsError; // Error with message and code
-			code: number; // Non-zero exit code
 			process: ChildProcess; // Process reference
 	  };
 ```

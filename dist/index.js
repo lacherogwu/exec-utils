@@ -57,7 +57,6 @@ function createResult(code, dataChunks, dataLength, errorChunks, errorLength, en
       data: buffer.toString(encoding),
       dataAsBuffer: buffer,
       error: null,
-      code,
       process
     };
   } else {
@@ -68,7 +67,6 @@ function createResult(code, dataChunks, dataLength, errorChunks, errorLength, en
       data: null,
       dataAsBuffer: null,
       error: execError,
-      code,
       process
     };
   }
@@ -82,7 +80,6 @@ function createErrorResult(err, signal, process) {
     data: null,
     dataAsBuffer: null,
     error: execError,
-    code: -1,
     process
   };
 }
@@ -175,7 +172,6 @@ async function exec(command, options = {}) {
       data: stdout.toString(encoding),
       dataAsBuffer: stdout,
       error: null,
-      code: 0,
       process: childProc
     };
   } catch (err) {

@@ -1,6 +1,6 @@
 {
 	"name": "exec-utils",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A modern promise-based utility for Node.js that enhances child process execution with timeouts, abort signals, input streaming, and consistent error handling.",
 	"types": "./dist/index.d.ts",
 	"exports": {

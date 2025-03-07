@@ -14,7 +14,6 @@ export type CommandResult =
 					error: ExecUtilsError;
 			  }
 	  ) & {
-			code: number;
 			process: ChildProcess;
 	  };
 

@@ -65,7 +65,6 @@ function createResult(code: number, dataChunks: Buffer[], dataLength: number, er
 			data: buffer.toString(encoding),
 			dataAsBuffer: buffer,
 			error: null,
-			code,
 			process,
 		};
 	} else {
@@ -76,7 +75,6 @@ function createResult(code: number, dataChunks: Buffer[], dataLength: number, er
 			data: null,
 			dataAsBuffer: null,
 			error: execError,
-			code,
 			process,
 		};
 	}
@@ -95,7 +93,6 @@ function createErrorResult(err: unknown, signal: AbortSignal, process: childProc
 		data: null,
 		dataAsBuffer: null,
 		error: execError,
-		code: -1,
 		process,
 	};
 }
@@ -114,7 +111,7 @@ function createErrorResult(err: unknown, signal: AbortSignal, process: childProc
  * console.log(data); // 'Hello World\n'
  *
  * // With timeout
- * const { error, code } = await spawn('sleep', ['10'], { timeout: 5000 });
+ * const { error } = await spawn('sleep', ['10'], { timeout: 5000 });
  * if (error) {
  *   console.log(error.message); // "Command timed out after 5000ms"
  * }
@@ -278,7 +275,6 @@ export async function exec(command: string, options: ExecOptions = {}): Promise<
 			data: stdout.toString(encoding),
 			dataAsBuffer: stdout,
 			error: null,
-			code: 0,
 			process: childProc,
 		};
 	} catch (err: unknown) {
