@@ -1,7 +1,7 @@
 import type { ChildProcess, SpawnOptions as SpawnOptions_, ExecOptions as ExecOptions_ } from 'node:child_process';
 import type { ExecUtilsError } from './Error';
 
-export type SpawnResult =
+export type CommandResult =
 	| (
 			| {
 					data: string;

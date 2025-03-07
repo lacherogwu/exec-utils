@@ -2,7 +2,7 @@ import childProcess from 'node:child_process';
 import { once } from 'node:events';
 import util from 'node:util';
 import { ExecUtilsError } from './Error';
-import type { BaseOptions, SpawnResult, SpawnOptions, ExecOptions } from './types';
+import type { BaseOptions, CommandResult, SpawnOptions, ExecOptions } from './types';
 
 export * from './types';
 export { ExecUtilsError } from './Error';
@@ -58,7 +58,7 @@ function handleInput(child: childProcess.ChildProcess, input: string | Buffer | 
 /**
  * Creates a result object from process execution
  */
-function createResult(code: number, dataChunks: Buffer[], dataLength: number, errorChunks: Buffer[], errorLength: number, encoding: BufferEncoding, process: childProcess.ChildProcess): SpawnResult {
+function createResult(code: number, dataChunks: Buffer[], dataLength: number, errorChunks: Buffer[], errorLength: number, encoding: BufferEncoding, process: childProcess.ChildProcess): CommandResult {
 	if (code === 0) {
 		const buffer = Buffer.concat(dataChunks, dataLength);
 		return {
@@ -85,7 +85,7 @@ function createResult(code: number, dataChunks: Buffer[], dataLength: number, er
 /**
  * Creates an error result when execution fails
  */
-function createErrorResult(err: unknown, signal: AbortSignal, process: childProcess.ChildProcess): SpawnResult {
+function createErrorResult(err: unknown, signal: AbortSignal, process: childProcess.ChildProcess): CommandResult {
 	let execError = err instanceof Error ? new ExecUtilsError(err.message, -1) : new ExecUtilsError('Unknown error occurred', -1);
 	if (signal.aborted) {
 		execError = signal.reason instanceof Error ? new ExecUtilsError(signal.reason.message, -1) : new ExecUtilsError('Operation aborted', -1);
@@ -106,7 +106,7 @@ function createErrorResult(err: unknown, signal: AbortSignal, process: childProc
  * @param command - The command to execute
  * @param args - Array of arguments to pass to the command
  * @param options - Optional configuration object
- * @returns A promise that resolves to a SpawnResult object containing either the command output or error information
+ * @returns A promise that resolves to a CommandResult object containing either the command output or error information
  *
  * @example
  * // Basic usage
@@ -131,7 +131,7 @@ function createErrorResult(err: unknown, signal: AbortSignal, process: childProc
  * controller.abort(); // Cancel the operation
  * const { error } = await processPromise;
  */
-export async function spawn(command: string, args: readonly string[], options: SpawnOptions = {}): Promise<SpawnResult> {
+export async function spawn(command: string, args: readonly string[], options: SpawnOptions = {}): Promise<CommandResult> {
 	const encoding = options.encoding || 'utf8';
 	const maxBuffer = options.maxBuffer || 80 * 1024 * 1024; // 80MB default
 
@@ -206,7 +206,7 @@ export async function spawn(command: string, args: readonly string[], options: S
  *
  * @param command - The shell command to execute
  * @param options - Optional configuration object
- * @returns A promise that resolves to a SpawnResult object containing either the command output or error information
+ * @returns A promise that resolves to a CommandResult object containing either the command output or error information
  *
  * @example
  * // Basic usage
@@ -231,7 +231,7 @@ export async function spawn(command: string, args: readonly string[], options: S
  * });
  * console.log(data.trim()); // '"John"'
  */
-export async function exec(command: string, options: ExecOptions = {}): Promise<SpawnResult> {
+export async function exec(command: string, options: ExecOptions = {}): Promise<CommandResult> {
 	const encoding = options.encoding || 'utf8';
 	const maxBuffer = options.maxBuffer || 80 * 1024 * 1024; // 80MB default
 

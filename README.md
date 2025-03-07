@@ -114,7 +114,7 @@ if (error) {
 
 ## API
 
-### `spawn(command: string, args: string[], options?: SpawnOptions): Promise<SpawnResult>`
+### `spawn(command: string, args: string[], options?: SpawnOptions): Promise<CommandResult>`
 
 Executes a command with arguments.
 
@@ -123,9 +123,9 @@ Executes a command with arguments.
   - `args`: Array of arguments
   - `options`: Optional configuration object
 - **Returns:**
-  - Promise resolving to a `SpawnResult` object
+  - Promise resolving to a `CommandResult` object
 
-### `exec(command: string, options?: ExecOptions): Promise<SpawnResult>`
+### `exec(command: string, options?: ExecOptions): Promise<CommandResult>`
 
 Executes a shell command.
 
@@ -133,7 +133,7 @@ Executes a shell command.
   - `command`: Shell command to execute
   - `options`: Optional configuration object
 - **Returns:**
-  - Promise resolving to a `SpawnResult` object
+  - Promise resolving to a `CommandResult` object
 
 ### Options
 
@@ -165,7 +165,7 @@ interface ExecOptions {
 ### Result Object
 
 ```typescript
-type SpawnResult =
+type CommandResult =
 	| {
 			// Process succeeded
 			data: string; // Process output as string

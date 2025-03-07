@@ -18,7 +18,7 @@ declare class ExecUtilsError extends Error {
     constructor(message: string, code: number);
 }
 
-type SpawnResult = ({
+type CommandResult = ({
     data: string;
     dataAsBuffer: Buffer;
     error: null;
@@ -66,7 +66,7 @@ interface ExecOptions extends BaseOptions, ExecOptions$1 {
  * @param command - The command to execute
  * @param args - Array of arguments to pass to the command
  * @param options - Optional configuration object
- * @returns A promise that resolves to a SpawnResult object containing either the command output or error information
+ * @returns A promise that resolves to a CommandResult object containing either the command output or error information
  *
  * @example
  * // Basic usage
@@ -91,7 +91,7 @@ interface ExecOptions extends BaseOptions, ExecOptions$1 {
  * controller.abort(); // Cancel the operation
  * const { error } = await processPromise;
  */
-declare function spawn(command: string, args: readonly string[], options?: SpawnOptions): Promise<SpawnResult>;
+declare function spawn(command: string, args: readonly string[], options?: SpawnOptions): Promise<CommandResult>;
 /**
  * Executes a shell command as a child process.
  *
@@ -100,7 +100,7 @@ declare function spawn(command: string, args: readonly string[], options?: Spawn
  *
  * @param command - The shell command to execute
  * @param options - Optional configuration object
- * @returns A promise that resolves to a SpawnResult object containing either the command output or error information
+ * @returns A promise that resolves to a CommandResult object containing either the command output or error information
  *
  * @example
  * // Basic usage
@@ -125,6 +125,6 @@ declare function spawn(command: string, args: readonly string[], options?: Spawn
  * });
  * console.log(data.trim()); // '"John"'
  */
-declare function exec(command: string, options?: ExecOptions): Promise<SpawnResult>;
+declare function exec(command: string, options?: ExecOptions): Promise<CommandResult>;
 
-export { type BaseOptions, type ExecOptions, ExecUtilsError, type SpawnOptions, type SpawnResult, exec, spawn };
+export { type BaseOptions, type CommandResult, type ExecOptions, ExecUtilsError, type SpawnOptions, exec, spawn };
